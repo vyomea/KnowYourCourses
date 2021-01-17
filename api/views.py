@@ -6,13 +6,14 @@ main = Blueprint("main", __name__)
 
 @main.route('/rating')
 def getRating():
-    rating = 0
+    rating = ""
+    comment = ""
     name = request.args.get('name')
     courseName = request.args.get('courseName')
     courseNumber = request.args.get('courseNumber')
-    rating = getCourseDifficulty(name,courseName+" "+courseNumber)
+    [rating,comment] = getCourseDifficulty(name,courseName+" "+courseNumber)
     #rating = "hench"
     if(rating):
         return jsonify({'rating':rating})
-    rating = -1
-    return jsonify({'rating':rating})
+    rating = "-1"
+    return jsonify({'rating':rating,'comment':comment})

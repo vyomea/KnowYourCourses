@@ -42,7 +42,7 @@ def find_prof(name):
             print(total_ratings)
             print(difficulty)
             print(percentageRetake)
-    profData = [rating,total_ratings,difficulty,percentageRetake]
+    profData = [rating,total_ratings,difficulty,percentageRetake,tid]
     if(all(profData)):
         return profData
     return False
