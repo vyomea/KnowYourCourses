@@ -9,6 +9,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import React, { useState, useEffect } from 'react';
 function App() {
+useEffect(() => {
+    fetch("/rating").then(response =>
+      response.json().then(data => {
+        console.log(data);
+      })
+    );
+  }, []);
   return (
       <div className="App">
         <header className="App-header">
@@ -97,7 +104,7 @@ function FunctionalitySetter(props) {
   const [prof6,setProf6] = useState("")
   const [prof7,setProf7] = useState("")
   const MasterList = {
-    'ENG':[101,102],
+    'ENG':[101,102,103],
     'MATH':[101,102],
     'CMPUT':[174,175],
   }
