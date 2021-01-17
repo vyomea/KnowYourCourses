@@ -148,7 +148,6 @@ if __name__ == "__main__":
     post_dict, comments_dict = getDetails()
     numNegativeReviews = 0
     numPositiveReviews = 0
-    totalReviews = numNegativeReviews + numNegativeReviews
     totalPositiveConfidence = 0
     totalNegativeConfidence = 0
 
@@ -164,7 +163,8 @@ if __name__ == "__main__":
         elif review == "Negative":
             numNegativeReviews += 1
             totalNegativeConfidence += score
-    
+    totalReviews = numNegativeReviews + numNegativeReviews
+
     print("Number of Positive Reviews:", numPositiveReviews)
     print("Average Postive Review confidence:", totalPositiveConfidence/totalReviews)
     print("Number of Negative Reviews:", numNegativeReviews)
