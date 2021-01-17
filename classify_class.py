@@ -147,46 +147,107 @@ def find_prof(name):
     return False
 
 def getCourseDifficulty(name,course):
-    post_dict, comments_dict = getDetails(course)
-    numNegativeReviews = 0
-    numPositiveReviews = 0
-    totalPositiveConfidence = 0
-    totalNegativeConfidence = 0
+    data = findcourse(course)
+    if(data):
+        percentPosReviews = float(data[0])
+        percentNegReviews = float(data[1])
+        averagepositiveconfidence = float(data[2])
+        averagenegativeconfidence = float(data[3])
+    else:
+        post_dict, comments_dict = getDetails(course)
+        numNegativeReviews = 0
+        numPositiveReviews = 0
+        totalPositiveConfidence = 0
+        totalNegativeConfidence = 0
 
-    print("Number of Comments: ", len(comments_dict["comment_body"]))
+        print("Number of Comments: ", len(comments_dict["comment_body"]))
 
-    for comment in comments_dict["comment_body"]:
-        review, score = predict(comment)
+        for comment in comments_dict["comment_body"]:
+            review, score = predict(comment)
 
-        if review == "Positive":
-            numPositiveReviews += 1
-            totalPositiveConfidence += score
+            if review == "Positive":
+                numPositiveReviews += 1
+                totalPositiveConfidence += score
 
-        elif review == "Negative":
-            numNegativeReviews += 1
-            totalNegativeConfidence += score
-    totalReviews = numPositiveReviews + numNegativeReviews
-    print(totalReviews)
-    print("Number of Positive Reviews:", numPositiveReviews)
-    print("Average Postive Review confidence:", totalPositiveConfidence/totalReviews)
-    print("Number of Negative Reviews:", numNegativeReviews)
-    print("Average Negative Review confidence:", totalNegativeConfidence/totalReviews)
-
-    percentPosReviews = numPositiveReviews/totalReviews
-    percentNegReviews = numNegativeReviews/totalReviews
+            elif review == "Negative":
+                numNegativeReviews += 1
+                totalNegativeConfidence += score
+        totalReviews = numPositiveReviews + numNegativeReviews
+        print(totalReviews)
+        print("Number of Positive Reviews:", numPositiveReviews)
+        print("Average Postive Review confidence:", totalPositiveConfidence/totalReviews)
+        print("Number of Negative Reviews:", numNegativeReviews)
+        print("Average Negative Review confidence:", totalNegativeConfidence/totalReviews)
+        averagepositiveconfidence = totalPositiveConfidence/totalReviews
+        averagenegativeconfidence = totalNegativeConfidence/totalReviews
+        percentPosReviews = numPositiveReviews/totalReviews
+        percentNegReviews = numNegativeReviews/totalReviews
     rateMyProfData = find_prof(name)
     if(rateMyProfData):
         level_rating = int(course.split(" ")[1])//100
         level_percentage = 1+(level_rating-1)*3
         w4 = 0.18
         w5 = 0.18
-        w1 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(5-float(rateMyProfData[0]))*20
-        w2 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*float(rateMyProfData[2])*20
-        w3 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(100-int(rateMyProfData[3]))
-        w4 = 0.18*totalNegativeConfidence/totalReviews*percentNegReviews*100
-        w5 = 0.18*totalPositiveConfidence/totalReviews*(1-percentPosReviews)*100
-        w6 = (0.1+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*level_percentage
+        w1 = (0.18+(1-averagepositiveconfidence)*w5/4+(1-averagenegativeconfidence)*w4/4)*(5-float(rateMyProfData[0]))*20
+        w2 = (0.18+(1-averagepositiveconfidence)*w5/4+(1-averagenegativeconfidence)*w4/4)*float(rateMyProfData[2])*20
+        w3 = (0.18+(1-averagepositiveconfidence)*w5/4+(1-averagenegativeconfidence)*w4/4)*(100-int(rateMyProfData[3]))
+        w4 = 0.18*averagenegativeconfidence*percentNegReviews*100
+        w5 = 0.18*averagepositiveconfidence*(1-percentPosReviews)*100
+        w6 = (0.1+(1-averagepositiveconfidence)*w5/4+(1-averagenegativeconfidence)*w4/4)*level_percentage
         rating = w1+w2+w3+w4+w5+w6
         return rating
     return False
+
+def updateconfidencedatabase():
+    f = open("confidence.txt","w")
+    courses = ["econ 101","stat 252", "econ 102", "stat 151", "cmput 175", "math 101", "math 114", "math 102", "phys 124", "soc 100", "cmput 301", "cmput 204", "math 125", "psyco 104", "chem 103", "biol 107", "math 225", "engl 102", "cmput 274", "cmput 275"]
+    for course in courses:
+        post_dict, comments_dict = getDetails(course)
+        numNegativeReviews = 0
+        numPositiveReviews = 0
+        totalPositiveConfidence = 0
+        totalNegativeConfidence = 0
+
+        print("Number of Comments: ", len(comments_dict["comment_body"]))
+
+        for comment in comments_dict["comment_body"]:
+            review, score = predict(comment)
+
+            if review == "Positive":
+                numPositiveReviews += 1
+                totalPositiveConfidence += score
+
+            elif review == "Negative":
+                numNegativeReviews += 1
+                totalNegativeConfidence += score
+        totalReviews = numPositiveReviews + numNegativeReviews
+        percentPosReviews = numPositiveReviews/totalReviews
+        percentNegReviews = numNegativeReviews/totalReviews
+        averagepositiveconfidence = totalPositiveConfidence/totalReviews
+        averagenegativeconfidence = totalNegativeConfidence/totalReviews
+        f.write(course+"\n")
+        f.write("percent_positive:"+str(percentPosReviews)+"\n")
+        f.write("percent_negative:"+str(percentNegReviews)+"\n")
+        f.write("average_positive:"+str(averagepositiveconfidence)+"\n")
+        f.write("average_neg:"+str(averagenegativeconfidence)+"\n\n")
+def findcourse(course):
+    f = open("confidence.txt","r")
+    percentPosReviews = ""
+    percentNegReviews = ""
+    averagepositiveconfidence = ""
+    averagenegativeconfidence = ""
+    lines = f.readlines()
+    print(len(lines))
+    for i in range(0,len(lines)):
+        if(str(lines[i].strip())==course):
+            percentPosReviews = lines[i+1].split(':')[1].strip()
+            percentNegReviews = lines[i+2].split(':')[1].strip()
+            averagepositiveconfidence = lines[i+3].split(':')[1].strip()
+            averagenegativeconfidence = lines[i+4].split(':')[1].strip()
+        data = [percentPosReviews,percentNegReviews,averagepositiveconfidence,averagenegativeconfidence]
+    if(all(data)):
+        return data
+    return False
+print(getCourseDifficulty("Gordon Lee", "econ 101"))
+#updateconfidencedatabase()
 
