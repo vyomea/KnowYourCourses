@@ -11,6 +11,7 @@ def getRating():
     courseName = request.args.get('courseName')
     courseNumber = request.args.get('courseNumber')
     rating = getCourseDifficulty(name,courseName+" "+courseNumber)
+    #rating = "hench"
     if(rating):
         return jsonify({'rating':rating})
     rating = -1

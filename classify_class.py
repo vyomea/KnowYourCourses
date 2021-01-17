@@ -189,3 +189,4 @@ def getCourseDifficulty(name,course):
         rating = w1+w2+w3+w4+w5+w6
         return rating
     return False
+

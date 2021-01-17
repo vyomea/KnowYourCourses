@@ -13,7 +13,7 @@ import { Input } from 'semantic-ui-react'
 import React, { useState, useEffect } from 'react';
 function App() {
 useEffect(() => {
-    fetch("/rating?name=Gordon+Lee&courseName=ECON&courseNumber=101").then(response =>
+    fetch("/rating?name=Denilson+Barbosa&courseName=cmput&courseNumber=391").then(response =>
       response.json().then(data => {
         console.log(data);
       })
