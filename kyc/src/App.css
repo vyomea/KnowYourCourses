@@ -1,38 +1,99 @@
 .App {
   text-align: center;
+  align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App-header-text {
+  margin-bottom:-10px;
+}
+.ButtonText {
+  color:black;
+  font-size: calc(5px + 2vmin);
+  font-family:'Avenir Next Ultra Light';
+  font-weight: 400;
+
+}
+.MainContainer {
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.DifficultyMeter {
+  margin-bottom:20%;
+  margin-left:15%;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.hover{
+  color:black;
+  font-size: calc(5px + 2vmin);
+  font-family:'Avenir Next Ultra Light';
+  font-weight: 400;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.DifficultyMeter > div {
+  margin:6px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.SelectedFeature {
+  height: 50vh;
+  background-color:rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
+}
+.Feature1 {
+  background-color: #ffffff;
+}
+.FeatureButton {
+  background-color: rgb(255, 255, 255);
+  border-style:hidden;
+  border-radius: 20px;
+}
+.FeatureButton:hover {
+  color:aliceblue;
+  background-color:aliceblue;
+}
+.HorizontalDif{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
+}
+.VerticalContainer {
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: left;
+  padding: 20px;
+}
+.FeatureContainer {
+  margin-top:-10px;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+}
+.CourseLoadFormContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+}
+.CourseLoadFormContainer > div{
+  margin:6px;
+}
+.App-header {
+  background-color: #ffffff;
+  text-emphasis-color:black;
+  color:black;
+  font-family:'Avenir Next Ultra Light';
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  font-size: calc(30px + 2vmin);
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
