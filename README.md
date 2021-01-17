@@ -8,13 +8,13 @@ Based on correct entry of data, the applications fetches the corresponding diffi
 
 ## How to run:
 
-Step1: Clone the project and download all the required dependencies.
-Step2: While into the project, cd kys && npm start to start the front-end server
-Step3: From the root folder, in another terminal, start the backend server: 
-        export FLASK_APP=api
-        flask run
-Step4: You can look at the local ports and visit them, then follow along the instructions on the front-end server :)
-Step5: Have fun with different combinations.
+Step1: Clone the project and download all the required dependencies.\n
+Step2: While into the project, cd kys && npm start to start the front-end server.\n
+Step3: From the root folder, in another terminal, start the backend server: \n
+        export FLASK_APP=api\n
+        flask run\n
+Step4: You can look at the local ports and visit them, then follow along the instructions on the front-end server :)\n
+Step5: Have fun with different combinations.\n
 
 ## Notes
 
