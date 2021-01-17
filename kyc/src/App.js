@@ -74,13 +74,6 @@ const ProgressBar = (props) => {
 function FunctionalitySetter(props) {
   const [completed, setCompleted] = useState(0);
 
-
-
-  const diffculty = [
-  { bgcolor: "#6a1b9a", completed: 60 },
-  { bgcolor: "#00695c", completed: 30 },
-  { bgcolor: "#ef6c00", completed: 53 },
-]
   const [id1,setId1] = useState("")
   const [id2,setId2] = useState("")
   const [id3,setId3] = useState("")
@@ -88,8 +81,6 @@ function FunctionalitySetter(props) {
   const [id5,setId5] = useState("")
   const [id6,setId6] = useState("")
   const [id7,setId7] = useState("")
-
-  
 
   const [courseNumber1,setCourseNumber1] = useState("")
   const [courseNumber2,setCourseNumber2] = useState("")
@@ -108,6 +99,10 @@ function FunctionalitySetter(props) {
   const [prof7,setProf7] = useState("")
 
   const [text,setText] = useState("")
+  const [category, setCategory] = useState("")
+  const handleCategory = (e) => {
+    setCategory(e.target.value)
+  }
   const MasterList = {
     'ENG':[101,102,103],
     'MATH':[101,102],
@@ -361,8 +356,29 @@ function FunctionalitySetter(props) {
   }
   else{
     return(
-      <p className = "ButtonText">
-      </p>
+      <div>
+      <div style={{display:'flex',justifyContent:'flex-start',flexDirection:'column'}}>
+        <p className = "ButtonText"> 
+            Enter the desired subject and choose the difficulty.
+        </p>
+        
+        <p className = "ButtonText"> 
+            The following recommended courses are a guideline, feel free to change difficulty.
+        </p>
+        <hr
+        style={{
+            color: "black",
+            backgroundColor: "black",
+            height: 0.5,
+            width:"60vh",
+            marginLeft:"35%"
+        }}
+        /> 
+        <div className = "CourseLoadFormContainer">
+      <Input focus placeholder='Category...' onChange={handleCategory}/>
+      </div>
+    </div>
+    </div>
   );
   }
 }
@@ -377,17 +393,12 @@ function Feature1() {
       <div className = "FeatureContainer">
         <button onClick = {()=>setEx("CourseLoad") } className = "FeatureButton"> 
           <p className = "ButtonText">
-                Course Load
+              Course Load
           </p>
         </button>
-        <button onClick = {()=>setEx("F2")} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Feature2
-          </p> 
-        </button>
-        <button onClick = {()=>setEx("F3")} className="FeatureButton"> 
+        <button onClick = {()=>setEx("DoesntMatter")} className="FeatureButton"> 
         <p className = "ButtonText">
-                Feature3
+            Recommendations
           </p>
         </button>
       </div>
