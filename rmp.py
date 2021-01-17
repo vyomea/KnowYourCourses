@@ -1,7 +1,7 @@
 import requests
 import json
 import math
-
+from bs4 import BeautifulSoup
 class RateMyProfScraper:
         def __init__(self,schoolid):
             self.UniversityId = schoolid
@@ -35,6 +35,7 @@ class RateMyProfScraper:
         def SearchProfessor(self, ProfessorName):
             self.indexnumber = self.GetProfessorIndex(ProfessorName)
             self.PrintProfessorInfo()
+            self.printdifficultyrating()
             return self.indexnumber
 
         def GetProfessorIndex(self,ProfessorName):  # function searches for professor in list
@@ -56,4 +57,20 @@ class RateMyProfScraper:
             else:
                 print(self.professorlist[self.indexnumber][key])
                 return self.professorlist[self.indexnumber][key]
-
+        def printdifficultyrating(self):
+            tid = self.PrintProfessorDetail("tid")
+            URL = 'https://www.ratemyprofessors.com/ShowRatings.jsp?tid='+str(tid)
+            page = requests.get(URL)
+            soup = BeautifulSoup(page.content, 'html.parser')
+            elems = soup.find(id = 'root')
+            res = elems.find_all('div',class_='FeedbackItem__FeedbackNumber-uof32n-1 kkESWs')
+            print("level of difficulty "+str(res[1].text))
+        def updatedatabase(self):
+            f = open("data.txt","w")
+            for i in range(0, len(self.professorlist)):
+                f.write("professor name:"+ self.professorlist[i]['tFname'] + " " + self.professorlist[i]['tLname']+"\n")
+                f.write("tid:"+str(self.professorlist[i]['tid'])+"\n")
+                f.write("overall rating:"+str(self.professorlist[i]['overall_rating'])+"\n")
+                f.write("total ratings:"+str(self.professorlist[i]['tNumRatings'])+"\n\n")
+uOfA = RateMyProfScraper(1407)
+uOfA.updatedatabase()
