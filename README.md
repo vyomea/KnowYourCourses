@@ -19,7 +19,7 @@ Step3: From the root folder, in another terminal, start the backend server:
         flask run
         
         
-Step4: You can look at the local ports and visit them, then follow along the instructions on the front-end server :).
+Step4: You can look at the local ports and visit them, then follow along the instructions on the front-end server :)
 
 
 Step5: Have fun with different combinations.
