@@ -13,9 +13,9 @@ def getDetails(query):
 
     # Acessing the reddit api
 
-    reddit = praw.Reddit(client_id="Jf6IlAgZhc7Scw",#my client id
-                        client_secret="ekm8wpxeYlG8a_2HPz4JS7jOWQA6ug",  #your client secret
-                        user_agent="Standard_Roll8992", #user agent name
+    reddit = praw.Reddit(client_id="",#my client id
+                        client_secret="",  #your client secret
+                        user_agent="", #user agent name
                         username = "",     # your reddit username
                         password = "")     # your reddit password
 
