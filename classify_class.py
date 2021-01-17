@@ -9,7 +9,7 @@ from spacy.util import minibatch, compounding
 import numpy
 from bs4 import BeautifulSoup
 import requests
-def getDetails():
+def getDetails(query):
 
     # Acessing the reddit api
 
@@ -35,9 +35,9 @@ def getDetails():
 
     # SCRAPING CAN BE DONE VIA VARIOUS STRATEGIES {HOT,TOP,etc} we will go with keyword strategy i.e using search a keyword
     
-        query = ['Cmput 401'] # default for now
-        class_num = input("Which class reviews do you want to see? ")
-        query = [class_num]
+        #query = ['Cmput 401'] # default for now
+        #class_num = input("Which class reviews do you want to see? ")
+        #query = [class_num]
     
         for item in query:
             post_dict = {
@@ -106,15 +106,18 @@ def getdifficulty(tid):
     soup = BeautifulSoup(page.content, 'html.parser')
     elems = soup.find(id = 'root')
     res = elems.find_all('div',class_='FeedbackItem__FeedbackNumber-uof32n-1 kkESWs')
-    return str(res[1].text)
+    if(len(res)>1):
+        return str(res[1].text)
+    return str(res[0].text)
 def getpercentage(tid):
     URL = 'https://www.ratemyprofessors.com/ShowRatings.jsp?tid='+ str(tid)
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
     elems = soup.find(id = 'root')
     res = elems.find_all('div',class_='FeedbackItem__FeedbackNumber-uof32n-1 kkESWs')
-    #print(res[0].text)
-    return str(res[0].text)
+    if(len(res)>1):
+        return str(res[0].text)
+    return "50"
 
 #get all data for a prof, returns a tuple (rating,total_ratings,difficulty,percentageRetake)
 def find_prof(name):
@@ -138,14 +141,13 @@ def find_prof(name):
             print(total_ratings)
             print(difficulty)
             print(percentageRetake)
-    return (rating,total_ratings,difficulty,percentageRetake)
+    data = [rating,total_ratings,difficulty,percentageRetake]
+    if(all(data)):
+        return [rating,total_ratings,difficulty,percentageRetake]
+    return False
 
 def getCourseDifficulty(name,course):
-
-    return True
-
-if __name__ == "__main__":
-    post_dict, comments_dict = getDetails()
+    post_dict, comments_dict = getDetails(course)
     numNegativeReviews = 0
     numPositiveReviews = 0
     totalPositiveConfidence = 0
@@ -163,8 +165,8 @@ if __name__ == "__main__":
         elif review == "Negative":
             numNegativeReviews += 1
             totalNegativeConfidence += score
-    totalReviews = numNegativeReviews + numNegativeReviews
-
+    totalReviews = numPositiveReviews + numNegativeReviews
+    print(totalReviews)
     print("Number of Positive Reviews:", numPositiveReviews)
     print("Average Postive Review confidence:", totalPositiveConfidence/totalReviews)
     print("Number of Negative Reviews:", numNegativeReviews)
@@ -172,6 +174,18 @@ if __name__ == "__main__":
 
     percentPosReviews = numPositiveReviews/totalReviews
     percentNegReviews = numNegativeReviews/totalReviews
-
-
-        
+    rateMyProfData = find_prof(name)
+    if(rateMyProfData):
+        level_rating = int(course.split(" ")[1])//100
+        level_percentage = 1+(level_rating-1)*3
+        w4 = 0.18
+        w5 = 0.18
+        w1 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(5-float(rateMyProfData[0]))*20
+        w2 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*float(rateMyProfData[2])*20
+        w3 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(100-int(rateMyProfData[3]))
+        w4 = 0.18*totalNegativeConfidence/totalReviews*percentNegReviews*100
+        w5 = 0.18*totalPositiveConfidence/totalReviews*(1-percentPosReviews)*100
+        w6 = (0.1+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*level_percentage
+        rating = w1+w2+w3+w4+w5+w6
+        return rating
+    return False
