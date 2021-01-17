@@ -187,9 +187,9 @@ def getCourseDifficulty(name,course):
                 numNegativeReviews += 1
                 totalNegativeConfidence += score
         totalReviews = numPositiveReviews + numNegativeReviews
-        if(totalReviews == 0):
+        if(totalReviews == 0){
             return False
-        
+        }
         print(totalReviews)
         print("Number of Positive Reviews:", numPositiveReviews)
         print("Average Postive Review confidence:", totalPositiveConfidence/totalReviews)
