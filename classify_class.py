@@ -34,7 +34,10 @@ def getDetails(query):
     #   BE CAPTURING ALL IDS THAT COME IN OUR WAY
 
     # SCRAPING CAN BE DONE VIA VARIOUS STRATEGIES {HOT,TOP,etc} we will go with keyword strategy i.e using search a keyword
-    
+
+
+        num_max_comment_upvote = 0
+        max_upvote_comment = ""
         #query = ['Cmput 401'] # default for now
         #class_num = input("Which class reviews do you want to see? ")
         #query = [class_num]
@@ -53,7 +56,8 @@ def getDetails(query):
                 "comment_id" : [],
                 "comment_parent_id" : [],
                 "comment_body" : [],
-                "comment_link_id" : []
+                "comment_link_id" : [],
+                "upvotes" : []
             }
             for submission in subreddit.search(query,sort = "top",limit = None):
                 post_dict["title"].append(submission.title)
@@ -73,6 +77,16 @@ def getDetails(query):
                     comments_dict["comment_parent_id"].append(comment.parent_id)
                     comments_dict["comment_body"].append(comment.body)
                     comments_dict["comment_link_id"].append(comment.link_id)
+                    comments_dict["upvotes"].append(comment.score)
+
+                    if comment.score > num_max_comment_upvote and comment.body.strip() != "[deleted]":
+                        max_upvote_comment = comment.body
+                        num_max_comment_upvote = comment.score
+                
+            comments_dict["most_helpful_comment"] = max_upvote_comment
+            print("Most upvotes: ", num_max_comment_upvote)
+
+                    
                 
             return post_dict, comments_dict
             
@@ -182,6 +196,7 @@ def getCourseDifficulty(name,course):
         averagenegativeconfidence = totalNegativeConfidence/totalReviews
         percentPosReviews = numPositiveReviews/totalReviews
         percentNegReviews = numNegativeReviews/totalReviews
+
     rateMyProfData = find_prof(name)
     if(rateMyProfData):
         level_rating = int(course.split(" ")[1])//100

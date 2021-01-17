@@ -8,9 +8,7 @@ numpy.random.seed(0)
 random.seed(0)
 
 TEST_REVIEW = """
-They're honestly like your 151 lab assignments except they're all individual, they use a real statistical program called SPSS instead of StatCrunch, and there's a lab final. I also found them a bit more difficult than the 151 labs in terms of how long they are. Often they like to throw in one challenging question right at the end which can keep you working on the assignment for hours until you figure it out. The TA's grade quite nicely though; it was pretty easy to keep a 90+ on the lab assignments. The labs themselves are not mandatory at all - you can just download the free version of SPSS provided by the math department onto your laptop and work from wherever if that's better for you. Treat your lab section as a reserved help session - otherwise, if you're getting through the assignment just fine, you can just skip the lab and use your time for other things. Likewise, if you need urgent help but your lab time isn't for a while, you can just go to any lab session that's open!
 
-Hope that helps. I found it very chill for the most part; only stress I had in this class was when I procrastinated learning material for the second half of the course (i.e., regression stuff) and had to rush to learn it for the final. I don't have my syllabus still but the grading scale was the same as 151's and the final will be worth either 55% or 60% depending on how you do on it relative to the midterm (an extra 5% weight will be added to whichever exam you do better on). Course isn't curved.
 """
 
 
@@ -52,7 +50,7 @@ def train_model(
     nlp = spacy.load("en_core_web_sm")
     if "textcat" not in nlp.pipe_names:
         textcat = nlp.create_pipe(
-            "textcat", config={"architecture": "simple_cnn"}
+            "textcat", config={"architecture": "ensemble"}
         )
         nlp.add_pipe(textcat, last=True)
     else:
