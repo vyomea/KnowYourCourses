@@ -38,6 +38,9 @@ def getDetails():
         query = ['Cmput 401'] # default for now
         class_num = input("Which class reviews do you want to see? ")
         query = [class_num]
+
+        num_max_comment_upvote = 0
+        max_upvote_comment = ""
     
         for item in query:
             post_dict = {
@@ -53,7 +56,8 @@ def getDetails():
                 "comment_id" : [],
                 "comment_parent_id" : [],
                 "comment_body" : [],
-                "comment_link_id" : []
+                "comment_link_id" : [],
+                "upvotes" : []
             }
             for submission in subreddit.search(query,sort = "top",limit = None):
                 post_dict["title"].append(submission.title)
@@ -73,6 +77,16 @@ def getDetails():
                     comments_dict["comment_parent_id"].append(comment.parent_id)
                     comments_dict["comment_body"].append(comment.body)
                     comments_dict["comment_link_id"].append(comment.link_id)
+                    comments_dict["upvotes"].append(comment.score)
+
+                    if comment.score > num_max_comment_upvote and comment.body.strip() != "[deleted]":
+                        max_upvote_comment = comment.body
+                        num_max_comment_upvote = comment.score
+                
+            comments_dict["most_helpful_comment"] = max_upvote_comment
+            print("Most upvotes: ", num_max_comment_upvote)
+
+                    
                 
             return post_dict, comments_dict
             
@@ -148,11 +162,11 @@ if __name__ == "__main__":
     post_dict, comments_dict = getDetails()
     numNegativeReviews = 0
     numPositiveReviews = 0
-    totalReviews = numNegativeReviews + numNegativeReviews
     totalPositiveConfidence = 0
     totalNegativeConfidence = 0
 
-    print("Number of Comments: ", len(comments_dict["comment_body"]))
+    print("Number of Comments:", len(comments_dict["comment_body"]))
+    print("Most helpful comment:", comments_dict["most_helpful_comment"])
 
     for comment in comments_dict["comment_body"]:
         review, score = predict(comment)
@@ -164,6 +178,8 @@ if __name__ == "__main__":
         elif review == "Negative":
             numNegativeReviews += 1
             totalNegativeConfidence += score
+    
+    totalReviews = numPositiveReviews + numNegativeReviews
     
     print("Number of Positive Reviews:", numPositiveReviews)
     print("Average Postive Review confidence:", totalPositiveConfidence/totalReviews)
