@@ -114,6 +114,17 @@ def predict(input_data: str = "no"):
     # )
 
     return prediction, score
+
+def getmosthelpful(tid):
+    URL = 'https://www.ratemyprofessors.com/ShowRatings.jsp?tid='+ str(tid)
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    elems = soup.find(id = 'root')
+    res = elems.find_all('div',class_="Comments__StyledComments-dzzyvm-0 gRjWel")
+    #print(str(res[0].text))
+    if(len(res)>= 1):
+        return str(res[0].text)
+    return False
 def getdifficulty(tid):
     URL = 'https://www.ratemyprofessors.com/ShowRatings.jsp?tid='+ str(tid)
     page = requests.get(URL)
@@ -157,7 +168,7 @@ def find_prof(name):
             print(percentageRetake)
     data = [rating,total_ratings,difficulty,percentageRetake]
     if(all(data)):
-        return [rating,total_ratings,difficulty,percentageRetake]
+        return [rating,total_ratings,difficulty,percentageRetake,tid]
     return False
 
 def getCourseDifficulty(name,course):
@@ -213,7 +224,8 @@ def getCourseDifficulty(name,course):
         w5 = 0.18*averagepositiveconfidence*(1-percentPosReviews)*100
         w6 = (0.1+(1-averagepositiveconfidence)*w5/4+(1-averagenegativeconfidence)*w4/4)*level_percentage
         rating = w1+w2+w3+w4+w5+w6
-        return rating
+        comment = getmosthelpful(rateMyProfData[4])
+        return [str(rating),comment]
     return False
 
 def updateconfidencedatabase():
@@ -266,5 +278,6 @@ def findcourse(course):
     if(all(data)):
         return data
     return False
+print(getCourseDifficulty("Gordon Lee","econ 101"))
 #updateconfidencedatabase()
 
