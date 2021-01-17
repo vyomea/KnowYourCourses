@@ -16,7 +16,7 @@ def getpercentage(tid):
     #print(res[0].text)
     return str(res[0].text)
 
-#get all data for a prof
+#get all data for a prof, returns a tuple (rating,total_ratings,difficulty,percentageRetake)
 def find_prof(name):
     f = open("data.txt","r")
     data = f.readlines()
@@ -37,7 +37,7 @@ def find_prof(name):
             print(total_ratings)
             print(difficulty)
             print(percentageRetake)
-    return (tid,rating,total_ratings,difficulty,percentageRetake)
+    return (rating,total_ratings,difficulty,percentageRetake)
 profData = find_prof("Gordon Lee")
 print(profData[2])
 #getpercentage("11935")
