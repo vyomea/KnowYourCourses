@@ -59,7 +59,7 @@ const ProgressBar = (props) => {
   return (
     <div style={containerStyles}>
       <div style={fillerStyles}>
-        <span style={labelStyles}>{`${completed}%`}</span>
+        <span style={labelStyles}>{}</span>
       </div>
     </div>
   );
@@ -134,6 +134,7 @@ function FunctionalitySetter(props) {
     'CMPUT175k':3,
     'CMPUT175l':4,
   }
+  var scores = []
 
   if (props.Feature =="CourseLoad"){  
 
@@ -157,7 +158,9 @@ function FunctionalitySetter(props) {
     setProg1(Math.round(json.rating * 100) / 100);}
     else{
       setProg1(0);
-    }}
+    }
+    scores.push(50)
+    }
     if(no==2){
       if (courseNumber2.length>=1 && id2.length>=1){
     const response = await fetch(`/rating?name=${first}+${second}&courseName=${name}&courseNumber=${number}`);
@@ -166,6 +169,7 @@ function FunctionalitySetter(props) {
     else{
       setProg2(0);
     }
+    scores.push(prog2)
     }
     if(no==3){
     if (courseNumber3.length>=1 && id3.length>=1){
@@ -175,6 +179,7 @@ function FunctionalitySetter(props) {
     else{
       setProg3(0);
     }
+    scores.push(prog3)
     }
     if(no==4){
     if (courseNumber4.length>=1 && id4.length>=1){
@@ -185,6 +190,7 @@ function FunctionalitySetter(props) {
     else{
       setProg4(0);
     }
+    scores.push(prog4)
     }
     if(no==5){
     if (courseNumber5.length>=1 && id5.length>=1){
@@ -194,6 +200,7 @@ function FunctionalitySetter(props) {
     else{
       setProg5(0);
     }
+    scores.push(prog5)
     }
     if(no==6){
     if (courseNumber6.length>=1 && id6.length>=1){
@@ -205,6 +212,7 @@ function FunctionalitySetter(props) {
     else{
     setProg6(Math.round(json.rating * 100) / 100);}
     }
+    scores.push(prog6)
     }
     if(no==7){
     if (courseNumber7.length>=1 && id7.length>=1){
@@ -216,6 +224,7 @@ function FunctionalitySetter(props) {
     else{
     setProg7(Math.round(json.rating * 100) / 100);}
     }
+    scores.push(prog7)
     }
     
   }
@@ -278,17 +287,56 @@ function FunctionalitySetter(props) {
   const handleProf7 = (e) => {
     setProf7(e.target.value)
   }
+  const handleCompleted = () => {
+    if(completed==90){
+      return "Not Manageable"
+    }
+    if (completed==30){
+      return "Light Course load"
+    }
+    if (completed == 50){
+      return "Manageable Course Load"
+    }
+    if (completed == 10){
+      return "Easy, have fun"
+    }
+    if (completed == 70){
+      return "Likely to be difficult"
+    }
+  }
 
   const calcTotal = () => {
-    let total = DifficultyList[id1+courseNumber1+prof1]+
-    DifficultyList[id2+courseNumber2+prof2]+
-    DifficultyList[id3+courseNumber3+prof3]+
-    DifficultyList[id4+courseNumber4+prof4]+
-    DifficultyList[id5+courseNumber5+prof5]+
-    DifficultyList[id6+courseNumber6+prof6]+
-    DifficultyList[id7+courseNumber7+prof7]
-    let answer = (total/7)*10;
-    setCompleted(answer);
+    scores.push(prog1)
+    scores.push(prog2)
+    scores.push(prog3)
+    scores.push(prog4)
+    scores.push(prog5)
+    scores.push(prog6)
+    scores.push(prog7)
+    let answer = 0;
+    for(let i =0; i<scores.length; i++){
+      answer+=scores[i]
+    }
+    console.log(answer);
+    if(answer >160 && answer<=200){
+      setCompleted(50)
+    }
+    else if (answer >= 250){
+      setCompleted(90)
+    }
+    else if (answer >= 130 && answer <=160){
+        setCompleted(30)
+    }
+    else if (answer < 150){
+      setCompleted(10)
+    }
+    else if(answer>200&&answer<250){
+      setCompleted(70)
+    }
+    else{
+      setCompleted(50)
+    }
+    console.log(scores)
   }
 
   let courses = []
@@ -460,6 +508,9 @@ function FunctionalitySetter(props) {
     >
       <Button variant="secondary">Total Difficulty. Hover over me to find out more!</Button>
     </OverlayTrigger>
+    <p className = "ButtonText">
+    {handleCompleted()}
+    </p>
     <ProgressBar bgcolor={color[Math.floor(completed/10)]} completed={completed} />
     </div> 
     </div>
