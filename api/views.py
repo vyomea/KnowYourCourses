@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-
+from classify_class import getCourseDifficulty
 main = Blueprint("main", __name__)
 
 main = Blueprint("main", __name__)
@@ -10,5 +10,8 @@ def getRating():
     name = request.args.get('name')
     courseName = request.args.get('courseName')
     courseNumber = request.args.get('courseNumber')
-
-    return jsonify({'rating':rating,'name':name,'courseName':courseName,'courseNumber':courseNumber})
+    rating = getCourseDifficulty(name,courseName+" "+courseNumber)
+    if(rating):
+        return jsonify({'rating':rating})
+    rating = -1
+    return jsonify({'rating':rating})

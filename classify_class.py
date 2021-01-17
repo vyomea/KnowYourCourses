@@ -141,7 +141,10 @@ def find_prof(name):
             print(total_ratings)
             print(difficulty)
             print(percentageRetake)
-    return (rating,total_ratings,difficulty,percentageRetake)
+    data = [rating,total_ratings,difficulty,percentageRetake]
+    if(all(data)):
+        return [rating,total_ratings,difficulty,percentageRetake]
+    return False
 
 def getCourseDifficulty(name,course):
     post_dict, comments_dict = getDetails(course)
@@ -172,18 +175,17 @@ def getCourseDifficulty(name,course):
     percentPosReviews = numPositiveReviews/totalReviews
     percentNegReviews = numNegativeReviews/totalReviews
     rateMyProfData = find_prof(name)
-    level_rating = int(course.split(" ")[1])//100
-    level_percentage = 1+(level_rating-1)*3
-    w4 = 0.18
-    w5 = 0.18
-    w1 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(5-float(rateMyProfData[0]))*20
-    w2 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*float(rateMyProfData[2])*20
-    w3 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(100-int(rateMyProfData[3]))
-    w4 = 0.18*totalNegativeConfidence/totalReviews*percentNegReviews*100
-    w5 = 0.18*totalPositiveConfidence/totalReviews*(1-percentPosReviews)*100
-    w6 = (0.1+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*level_percentage
-    rating = w1+w2+w3+w4+w5+w6
-    return rating
-
-if __name__ == "__main__":
-    print(getCourseDifficulty("Majid Khabbazian","ECE 311"))
+    if(rateMyProfData):
+        level_rating = int(course.split(" ")[1])//100
+        level_percentage = 1+(level_rating-1)*3
+        w4 = 0.18
+        w5 = 0.18
+        w1 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(5-float(rateMyProfData[0]))*20
+        w2 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*float(rateMyProfData[2])*20
+        w3 = (0.18+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*(100-int(rateMyProfData[3]))
+        w4 = 0.18*totalNegativeConfidence/totalReviews*percentNegReviews*100
+        w5 = 0.18*totalPositiveConfidence/totalReviews*(1-percentPosReviews)*100
+        w6 = (0.1+(1-totalPositiveConfidence/totalReviews)*w5/4+(1-totalNegativeConfidence/totalReviews)*w4/4)*level_percentage
+        rating = w1+w2+w3+w4+w5+w6
+        return rating
+    return False
