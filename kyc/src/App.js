@@ -6,11 +6,14 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'semantic-ui-css/semantic.min.css';
+import { Input } from 'semantic-ui-react'
+
 
 import React, { useState, useEffect } from 'react';
 function App() {
 useEffect(() => {
-    fetch("/rating").then(response =>
+    fetch("/rating?name=Gordon+Lee&courseName=ECON&courseNumber=101").then(response =>
       response.json().then(data => {
         console.log(data);
       })
@@ -103,6 +106,8 @@ function FunctionalitySetter(props) {
   const [prof5,setProf5] = useState("")
   const [prof6,setProf6] = useState("")
   const [prof7,setProf7] = useState("")
+
+  const [text,setText] = useState("")
   const MasterList = {
     'ENG':[101,102,103],
     'MATH':[101,102],
@@ -133,137 +138,97 @@ function FunctionalitySetter(props) {
 
   if (props.Feature =="CourseLoad"){  
 
-  const handleAdd = () => {
-    setCompleted(DifficultyList[id1+courseNumber1+prof1])
+  const handleCourseNumber1 = (e) => {
+    setCourseNumber1(e.target.value)
   }
-  const handleSelectCourseName1=(e)=>{
-    setId1(e.substring(2,e.length))
-    setCourseNumber1("")
-    setProf1("")
+  const handleCourseName1 = (e) => {
+    setId1(e.target.value)
   }
-  const handleSelectCourseName2=(e)=>{
-    setId2(e.substring(2,e.length))
-    setCourseNumber2("")
-    setProf2("")
-  }
-  const handleSelectCourseName3=(e)=>{
-    setId3(e.substring(2,e.length))
-    setCourseNumber3("")
-    setProf3("")
-  }
-  const handleSelectCourseName4=(e)=>{
-    setId4(e.substring(2,e.length))
-    setCourseNumber4("")
-    setProf4("")
-  }
-  const handleSelectCourseName5=(e)=>{
-    setId5(e.substring(2,e.length))
-    setCourseNumber5("")
-    setProf5("")
-  }
-  const handleSelectCourseName6=(e)=>{
-    setId6(e.substring(2,e.length))
-    setCourseNumber6("")
-    setProf6("")
-  }
-  const handleSelectCourseName7=(e)=>{
-    setId7(e.substring(2,e.length))
-    setCourseNumber7("")
-    setProf7("")
+  const handleProf1 = (e) => {
+    setProf1(e.target.value)
   }
 
-
-  const handleSelectCourseNumber1=(e)=>{
-    setCourseNumber1(e.substring(2,e.length))
-    setProf1("")
-
+  const handleCourseNumber2 = (e) => {
+    setCourseNumber2(e.target.value)
+  }
+  const handleCourseName2 = (e) => {
+    setId2(e.target.value)
+  }
+  const handleProf2 = (e) => {
+    setProf2(e.target.value)
   }
 
-  const handleSelectCourseNumber2=(e)=>{
-    setCourseNumber2(e.substring(2,e.length))
-    setProf2("")
+  const handleCourseNumber3 = (e) => {
+    setCourseNumber3(e.target.value)
+  }
+  const handleCourseName3 = (e) => {
+    setId3(e.target.value)
+  }
+  const handleProf3 = (e) => {
+    setProf3(e.target.value)
   }
 
-  const handleSelectCourseNumber3=(e)=>{
-    setCourseNumber3(e.substring(2,e.length))
-    setProf3("")
+  const handleCourseNumber4 = (e) => {
+    setCourseNumber4(e.target.value)
+  }
+  const handleCourseName4 = (e) => {
+    setId4(e.target.value)
+  }
+  const handleProf4 = (e) => {
+    setProf4(e.target.value)
   }
 
-  const handleSelectCourseNumber4=(e)=>{
-    setCourseNumber4(e.substring(2,e.length))
-    setProf4("")
+  const handleCourseNumber5 = (e) => {
+    setCourseNumber5(e.target.value)
+  }
+  const handleCourseName5 = (e) => {
+    setId5(e.target.value)
+  }
+  const handleProf5 = (e) => {
+    setProf5(e.target.value)
   }
 
-  const handleSelectCourseNumber5=(e)=>{
-    setCourseNumber5(e.substring(2,e.length))
-    setProf5("")
+  const handleCourseNumber6 = (e) => {
+    setCourseNumber6(e.target.value)
+  }
+  const handleCourseName6 = (e) => {
+    setId6(e.target.value)
+  }
+  const handleProf6 = (e) => {
+    setProf6(e.target.value)
   }
 
-  const handleSelectCourseNumber6=(e)=>{
-    setCourseNumber6(e.substring(2,e.length))
-    setProf6("")
+  const handleCourseNumber7 = (e) => {
+    setCourseNumber7(e.target.value)
+  }
+  const handleCourseName7 = (e) => {
+    setId7(e.target.value)
+  }
+  const handleProf7 = (e) => {
+    setProf7(e.target.value)
   }
 
-  const handleSelectCourseNumber7=(e)=>{
-    setCourseNumber7(e.substring(2,e.length))
-    setProf7("")
+  const calcTotal = () => {
+    let total = DifficultyList[id1+courseNumber1+prof1]+
+    DifficultyList[id2+courseNumber2+prof2]+
+    DifficultyList[id3+courseNumber3+prof3]+
+    DifficultyList[id4+courseNumber4+prof4]+
+    DifficultyList[id5+courseNumber5+prof5]+
+    DifficultyList[id6+courseNumber6+prof6]+
+    DifficultyList[id7+courseNumber7+prof7]
+    let answer = (total/7)*10;
+    setCompleted(answer);
   }
-  const handleSelectCourseProf1 = (e) => {
-    setProf1(e.substring(2,e.length))
-  }
-
-   const handleSelectCourseProf2 = (e) => {
-    setProf2(e.substring(2,e.length))
-  }
-  const handleAdd1 = (e) => {
-    setCompleted(DifficultyList[id2+courseNumber2+prof2])
-  }
-
-  const handleSelectCourseProf3 = (e) => {
-    setProf3(e.substring(2,e.length))
-  }
-  const handleAdd2 = (e) => {
-    setCompleted(DifficultyList[id3+courseNumber3+prof3])
-  }
-  
-  const handleSelectCourseProf4 = (e) => {
-    setProf4(e.substring(2,e.length))
-  }
-  const handleAdd3 = (e) => {
-    setCompleted(DifficultyList[id4+courseNumber4+prof4])
-  }
-
-  const handleSelectCourseProf5 = (e) => {
-    setProf5(e.substring(2,e.length))
-  }
-  const handleAdd4 = (e) => {
-    setCompleted(DifficultyList[id5+courseNumber5+prof5])
-  }
-  
-  const handleSelectCourseProf6 = (e) => {
-    setProf6(e.substring(2,e.length))
-  }
-  const handleAdd5 = (e) => {
-    setCompleted(DifficultyList[id6+courseNumber6+prof6])
-  }
-  const handleAdd6 = (e) => {
-    setCompleted(DifficultyList[id7+courseNumber7+prof7])
-  }
-  const handleSelectCourseProf7 = (e) => {
-    setProf7(e.substring(2,e.length))
-  }
-
-
 
   let courses = []
   const color = ['#b8ff04','#9aff02','#6fd40b','#b5d611','#d2d911',
-'#d6cf0f','#d9b813','#dba50f','#e89042','#eb4b1f']
+  '#d6cf0f','#d9b813','#dba50f','#e89042','#eb4b1f']
   Object.entries(MasterList).forEach(([key, value]) => courses.push(key));
   return(
     <div>
     <div style={{display:'flex',justifyContent:'flex-start',flexDirection:'column'}}>
     <p className = "ButtonText"> 
-        Choose your course name, corresponding course number and instructor!
+        Enter your course name, corresponding course number and instructor!
     </p>
     
     <p className = "ButtonText"> 
@@ -283,179 +248,43 @@ function FunctionalitySetter(props) {
 
     <div className = "VerticalContainer">
     <div className = "CourseLoadFormContainer">
-      <p className = "ButtonText">
+    <p className = "ButtonText">
       1.
-      </p>
-      <Dropdown onSelect={handleSelectCourseName1}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {id1.length<=1?"Course Name":id1}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courses.map((courseName) => (
-          <Dropdown.Item href ={`#/${courseName}`}>{courseName}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown onSelect={handleSelectCourseNumber1}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {courseNumber1.length<=1?"Course Number":courseNumber1}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {id1.length<=1?"":MasterList[id1].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-
-      </Dropdown>
-       <Dropdown onSelect={handleSelectCourseProf1}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {prof1.length<=0?"Select Instructor":prof1}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courseNumber1.length<=1?"":ProfessorList[id1+courseNumber1].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <button onClick = {handleAdd} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Add!
-          </p> 
-      </button>
+    </p>
+      <Input focus placeholder='Course Name...' onChange={handleCourseName1}/>
+      <Input focus placeholder='Course Name...' onChange={handleCourseNumber1}/>
+      <Input focus placeholder='Course Name...' onChange={handleProf1}/>
     </div>
 
-  <div className = "CourseLoadFormContainer">
+    <div className = "CourseLoadFormContainer">
       <p className = "ButtonText">
       2.
       </p>
-      <Dropdown onSelect={handleSelectCourseName2}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {id2.length<=1?"Course Name":id2}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courses.map((courseName) => (
-          <Dropdown.Item href ={`#/${courseName}`}>{courseName}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown onSelect={handleSelectCourseNumber2}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {courseNumber2.length<=1?"Course Number":courseNumber2}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {id2.length<=1?"":MasterList[id2].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-       <Dropdown onSelect={handleSelectCourseProf2}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {prof2.length<=0?"Select Instructor":prof2}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courseNumber2.length<=1?"":ProfessorList[id2+courseNumber2].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <button onClick = {handleAdd1} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Add!
-          </p> 
-      </button>
+       <Input focus placeholder='Course Name...' onChange={handleCourseName2}/>
+      <Input focus placeholder='Course Name...' onChange={handleCourseNumber2}/>
+      <Input focus placeholder='Course Name...' onChange={handleProf2}/>
     </div>
 
     <div className = "CourseLoadFormContainer">
       <p className = "ButtonText">
       3.
       </p>
-      <Dropdown onSelect={handleSelectCourseName3}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {id3.length<=1?"Course Name":id3}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courses.map((courseName) => (
-          <Dropdown.Item href ={`#/${courseName}`}>{courseName}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown onSelect={handleSelectCourseNumber3}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {courseNumber3.length<=1?"Course Number":courseNumber3}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {id3.length<=1?"":MasterList[id3].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-       <Dropdown onSelect={handleSelectCourseProf3}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {prof3.length<=0?"Select Instructor":prof3}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courseNumber3.length<=1?"":ProfessorList[id3+courseNumber3].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <button onClick = {handleAdd2} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Add!
-          </p> 
-      </button>
+       <Input focus placeholder='Course Name...' onChange={handleCourseName3}/>
+      <Input focus placeholder='Course Name...' onChange={handleCourseNumber3}/>
+      <Input focus placeholder='Course Name...' onChange={handleProf3}/>
     </div>
 
     <div className = "CourseLoadFormContainer">
       <p className = "ButtonText">
       4.
       </p>
-      <Dropdown onSelect={handleSelectCourseName4}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {id4.length<=1?"Course Name":id4}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courses.map((courseName) => (
-          <Dropdown.Item href ={`#/${courseName}`}>{courseName}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown onSelect={handleSelectCourseNumber4}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {courseNumber4.length<=1?"Course Number":courseNumber4}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {id4.length<=1?"":MasterList[id4].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-       <Dropdown onSelect={handleSelectCourseProf4}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {prof4.length<=0?"Select Instructor":prof4}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courseNumber4.length<=1?"":ProfessorList[id4+courseNumber4].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <button onClick = {handleAdd3} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Add!
-          </p> 
+       <Input focus placeholder='Course Name...' onChange={handleCourseName4}/>
+      <Input focus placeholder='Course Name...' onChange={handleCourseNumber4}/>
+      <Input focus placeholder='Course Name...' onChange={handleProf4}/>
+      <button onClick = {calcTotal} className= "FeatureButton">
+        <p className = "ButtonText">
+                Calculate total
+        </p> 
       </button>
     </div>
 
@@ -463,132 +292,27 @@ function FunctionalitySetter(props) {
       <p className = "ButtonText">
       5.
       </p>
-      <Dropdown onSelect={handleSelectCourseName5}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {id5.length<=1?"Course Name":id5}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courses.map((courseName) => (
-          <Dropdown.Item href ={`#/${courseName}`}>{courseName}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown onSelect={handleSelectCourseNumber5}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {courseNumber5.length<=1?"Course Number":courseNumber5}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {id5.length<=1?"":MasterList[id5].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-       <Dropdown onSelect={handleSelectCourseProf5}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {prof5.length<=0?"Select Instructor":prof5}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courseNumber5.length<=1?"":ProfessorList[id5+courseNumber5].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <button onClick = {handleAdd4} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Add!
-          </p> 
-      </button>
+       <Input focus placeholder='Course Name...' onChange={handleCourseName5}/>
+      <Input focus placeholder='Course Name...' onChange={handleCourseNumber5}/>
+      <Input focus placeholder='Course Name...' onChange={handleProf5}/>
     </div>
 
     <div className = "CourseLoadFormContainer">
       <p className = "ButtonText">
       6.
       </p>
-      <Dropdown onSelect={handleSelectCourseName6}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {id6.length<=1?"Course Name":id6}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courses.map((courseName) => (
-          <Dropdown.Item href ={`#/${courseName}`}>{courseName}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown onSelect={handleSelectCourseNumber6}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {courseNumber6.length<=1?"Course Number":courseNumber6}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {id6.length<=1?"":MasterList[id6].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-       <Dropdown onSelect={handleSelectCourseProf6}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {prof6.length<=0?"Select Instructor":prof6}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courseNumber6.length<=1?"":ProfessorList[id6+courseNumber6].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <button onClick = {handleAdd5} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Add!
-          </p> 
-      </button>
+       <Input focus placeholder='Course Name...' onChange={handleCourseName6}/>
+      <Input focus placeholder='Course Name...' onChange={handleCourseNumber6}/>
+      <Input focus placeholder='Course Name...' onChange={handleProf6}/>
     </div>
 
     <div className = "CourseLoadFormContainer">
       <p className = "ButtonText">
       7.
       </p>
-      <Dropdown onSelect={handleSelectCourseName7}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {id7.length<=1?"Course Name":id7}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courses.map((courseName) => (
-          <Dropdown.Item href ={`#/${courseName}`}>{courseName}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <Dropdown onSelect={handleSelectCourseNumber7}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {courseNumber7.length<=1?"Course Number":courseNumber7}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {id7.length<=1?"":MasterList[id7].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-       <Dropdown onSelect={handleSelectCourseProf7}>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-          {prof7.length<=0?"Select Instructor":prof7}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-        {courseNumber7.length<=1?"":ProfessorList[id7+courseNumber7].map((cNum) => (
-          <Dropdown.Item href ={`#/${cNum}`}>{cNum}</Dropdown.Item>
-        )
-        )}
-        </Dropdown.Menu>
-      </Dropdown>
-      <button onClick = {handleAdd6} className= "FeatureButton">
-          <p className = "ButtonText">
-                  Add!
-          </p> 
-      </button>
+       <Input focus placeholder='Course Name...' onChange={handleCourseName7}/>
+      <Input focus placeholder='Course Name...' onChange={handleCourseNumber7}/>
+      <Input focus placeholder='Course Name...' onChange={handleProf7}/>
     </div>
     </div>
 
@@ -602,7 +326,7 @@ function FunctionalitySetter(props) {
       placement={'top'}
       overlay={
         <Tooltip id={`tooltip-${'top'}`}>
-          The difficulty individual difficulty includes our own algorithm to classify
+          Individual difficulty includes our own algorithm to classify
           reviews, ratings, and other factors for every course.
           Method: Extensive data collection from the web and then using NLP, 
           and Deep Learning to get predictions. 
@@ -623,13 +347,13 @@ function FunctionalitySetter(props) {
       placement={'top'}
       overlay={
         <Tooltip id={`tooltip-${'top'}`}>
-          The total difficulty is the average of the individual difficulties.
+         A measure of how difficult it will be to manage this combination of courses.
         </Tooltip>
       }
     >
       <Button variant="secondary">Total Difficulty. Hover over me to find out more!</Button>
     </OverlayTrigger>
-    <ProgressBar bgcolor={color[Math.floor(completed)]} completed={completed*10} />
+    <ProgressBar bgcolor={color[Math.floor(completed/10)]} completed={completed} />
     </div> 
     </div>
     </div>
