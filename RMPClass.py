@@ -82,6 +82,7 @@ class RateMyProfAPI:
 
                 # Get rating
                 self.rating = str(t.xpath('//*[@id="mainContent"]/div[1]/div[3]/div[1]/div/div[1]/div/div/div/text()'))
+                print(self.rating)
                 if re.match(r'.*?N/A', self.rating):
                     self.rating = INFO_NOT_AVAILABLE
                 else:
