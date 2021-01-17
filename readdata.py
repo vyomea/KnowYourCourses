@@ -15,7 +15,8 @@ def getpercentage(tid):
     res = elems.find_all('div',class_='FeedbackItem__FeedbackNumber-uof32n-1 kkESWs')
     #print(res[0].text)
     return str(res[0].text)
-    
+
+#get all data for a prof
 def find_prof(name):
     f = open("data.txt","r")
     data = f.readlines()
@@ -36,7 +37,8 @@ def find_prof(name):
             print(total_ratings)
             print(difficulty)
             print(percentageRetake)
-
-find_prof("Gordon Lee")
+    return (tid,rating,total_ratings,difficulty,percentageRetake)
+profData = find_prof("Gordon Lee")
+print(profData[2])
 #getpercentage("11935")
             
