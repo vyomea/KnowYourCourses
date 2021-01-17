@@ -77,6 +77,14 @@ function FunctionalitySetter(props) {
   const [prog5,setProg5] = useState(0);
   const [prog6,setProg6] = useState(0);
   const [prog7,setProg7] = useState(0);
+  
+  const [com1,setCom1] = useState("");
+  const [com2,setCom2] = useState("");
+  const [com3,setCom3] = useState("");
+  const [com4,setCom4] = useState("");
+  const [com5,setCom5] = useState("");
+  const [com6,setCom6] = useState("");
+  const [com7,setCom7] = useState("");
 
   const [id1,setId1] = useState("")
   const [id2,setId2] = useState("")
@@ -155,7 +163,11 @@ function FunctionalitySetter(props) {
     if (courseNumber1.length>=1 && id1.length>=1){
     const response = await fetch(`/rating?name=${first}+${second}&courseName=${name}&courseNumber=${number}`);
     const json = await response.json();
-    setProg1(Math.round(json.rating * 100) / 100);}
+    setProg1(Math.round(json.rating * 100) / 100);
+    console.log(json.comment)
+    setCom1(json.comment)
+    console.log(com1)
+}
     else{
       setProg1(0);
     }
@@ -165,7 +177,9 @@ function FunctionalitySetter(props) {
       if (courseNumber2.length>=1 && id2.length>=1){
     const response = await fetch(`/rating?name=${first}+${second}&courseName=${name}&courseNumber=${number}`);
     const json = await response.json();
-    setProg2(Math.round(json.rating * 100) / 100);}
+    setProg2(Math.round(json.rating * 100) / 100)
+    setCom2(json.comment)
+}
     else{
       setProg2(0);
     }
@@ -175,7 +189,9 @@ function FunctionalitySetter(props) {
     if (courseNumber3.length>=1 && id3.length>=1){
     const response = await fetch(`/rating?name=${first}+${second}&courseName=${name}&courseNumber=${number}`);
     const json = await response.json();
-    setProg3(Math.round(json.rating * 100) / 100);}
+    setProg3(Math.round(json.rating * 100) / 100);
+        setCom3(json.comment)
+}
     else{
       setProg3(0);
     }
@@ -186,6 +202,8 @@ function FunctionalitySetter(props) {
     const response = await fetch(`/rating?name=${first}+${second}&courseName=${name}&courseNumber=${number}`);
     const json = await response.json();
     setProg4(Math.round(json.rating * 100) / 100);
+        setCom4(json.comment)
+
     }
     else{
       setProg4(0);
@@ -196,7 +214,9 @@ function FunctionalitySetter(props) {
     if (courseNumber5.length>=1 && id5.length>=1){
     const response = await fetch(`/rating?name=${first}+${second}&courseName=${name}&courseNumber=${number}`);
     const json = await response.json();
-    setProg5(Math.round(json.rating * 100) / 100);}
+    setProg5(Math.round(json.rating * 100) / 100);
+        setCom5(json.comment)
+}
     else{
       setProg5(0);
     }
@@ -210,7 +230,9 @@ function FunctionalitySetter(props) {
       setProg6(0)
     }
     else{
-    setProg6(Math.round(json.rating * 100) / 100);}
+    setProg6(Math.round(json.rating * 100) / 100);
+        setCom6(json.comment)
+}
     }
     scores.push(prog6)
     }
@@ -222,7 +244,9 @@ function FunctionalitySetter(props) {
       setProg7(0)
     }
     else{
-    setProg7(Math.round(json.rating * 100) / 100);}
+    setProg7(Math.round(json.rating * 100) / 100);
+        setCom7(json.comment)
+}
     }
     scores.push(prog7)
     }
@@ -514,6 +538,51 @@ function FunctionalitySetter(props) {
     <ProgressBar bgcolor={color[Math.floor(completed/10)]} completed={completed} />
     </div> 
     </div>
+    <p className = "ButtonText">
+    Most helpful reviews
+    </p>
+    <p className = "ButtonText">
+    {prof1.length>1?id1+courseNumber1+ " taught by "+prof1:""}   
+     </p>
+    <p className = "ButtonText">
+    {com1}
+    </p>
+    <p className = "ButtonText">
+    {prof2.length>1?id2+courseNumber2+ " taught by "+prof2:""}   
+     </p>
+    <p className = "ButtonText">
+    {com2}
+    </p>
+    <p className = "ButtonText">
+    {prof3.length>1?id3+courseNumber3+ " taught by "+prof3:""}   
+     </p>
+    <p className = "ButtonText">
+    {com3}
+    </p>
+    <p className = "ButtonText">
+    {prof4.length>1?id4+courseNumber4+ " taught by "+prof4:""}   
+     </p>
+    <p className = "ButtonText">
+    {com4}
+    </p>
+    <p className = "ButtonText">
+    {prof5.length>1?id5+courseNumber5+ " taught by "+prof5:""}   
+     </p>
+    <p className = "ButtonText">
+    {com5}
+    </p>
+    <p className = "ButtonText">
+    {prof6.length>1?id6+courseNumber6+ " taught by "+prof6:""}   
+     </p>
+    <p className = "ButtonText">
+    {com6}
+    </p>
+    <p className = "ButtonText">
+    {prof7.length>1?id7+courseNumber7+ " taught by "+prof7:""}   
+     </p>
+    <p className = "ButtonText">
+    {com7}
+    </p>
     </div>
   );
   }
@@ -522,11 +591,7 @@ function FunctionalitySetter(props) {
       <div>
       <div style={{display:'flex',justifyContent:'flex-start',flexDirection:'column'}}>
         <p className = "ButtonText"> 
-            Enter the desired subject and choose the difficulty.
-        </p>
-        
-        <p className = "ButtonText"> 
-            The following recommended courses are a guideline, feel free to change difficulty.
+            COMING SOON!
         </p>
         <hr
         style={{
@@ -538,7 +603,6 @@ function FunctionalitySetter(props) {
         }}
         /> 
         <div className = "CourseLoadFormContainer">
-      <Input focus placeholder='Category...' onChange={handleCategory}/>
       </div>
     </div>
     </div>

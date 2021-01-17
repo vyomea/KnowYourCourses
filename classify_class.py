@@ -278,6 +278,5 @@ def findcourse(course):
     if(all(data)):
         return data
     return False
-print(getCourseDifficulty("Gordon Lee","econ 101"))
 #updateconfidencedatabase()
 

@@ -14,6 +14,6 @@ def getRating():
     [rating,comment] = getCourseDifficulty(name,courseName+" "+courseNumber)
     #rating = "hench"
     if(rating):
-        return jsonify({'rating':rating})
+        return jsonify({'rating':rating,'comment':comment})
     rating = "-1"
-    return jsonify({'rating':rating,'comment':comment})
+    
