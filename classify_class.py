@@ -98,7 +98,7 @@ def getDetails(query):
 
 def predict(input_data: str = "no"):
     #  Load saved trained model
-    loaded_model = spacy.load("model_artifacts")
+    loaded_model = spacy.load("model_artifacts_ensemble")
     # Generate prediction
     parsed_text = loaded_model(input_data)
     # Determine prediction to return
@@ -161,7 +161,7 @@ def find_prof(name):
     return False
 
 def getCourseDifficulty(name,course):
-    data = findcourse(course)
+    data = findcourse(course.lower())
     if(data):
         percentPosReviews = float(data[0])
         percentNegReviews = float(data[1])
@@ -187,9 +187,9 @@ def getCourseDifficulty(name,course):
                 numNegativeReviews += 1
                 totalNegativeConfidence += score
         totalReviews = numPositiveReviews + numNegativeReviews
-        if(totalReviews == 0){
+        if(totalReviews == 0):
             return False
-        }
+        
         print(totalReviews)
         print("Number of Positive Reviews:", numPositiveReviews)
         print("Average Postive Review confidence:", totalPositiveConfidence/totalReviews)
@@ -266,6 +266,6 @@ def findcourse(course):
     if(all(data)):
         return data
     return False
-print(getCourseDifficulty("Gordon Lee", "econ 101"))
+print(getCourseDifficulty("Antal Molina", "ece 325"))
 #updateconfidencedatabase()
 
